@@ -1,177 +1,101 @@
-#include<iostream>
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
 using namespace std;
-
-class Telefon {
-private:
-	float rezolutie;
-	float memorie;
-	string model;
-	char* producator;
+class Prajitura
+{public:
+	char* denumire;
 	float pret;
-	int nrAplicatii;
-	float* memorieAplicatii;
-    const int id;
-    static int contor;
-public:
-	Telefon(): id(contor++)
+	float cantitate;
+	bool dePost;
+	int nrIngrediente;
+	string* ingrediente;
+	//const int id;
+	Prajitura()
+	{ 
+		this->denumire = new char[strlen("tiramisu") + 1];
+		strcpy(denumire, "tiramisu");
+		this->pret = 15;
+		this->cantitate = 4;
+		this->dePost = true;
+		this->nrIngrediente = 3;
+		this->ingrediente = new string[this->nrIngrediente];
+		this->ingrediente[0] = "piscoturi";
+		this->ingrediente[1] = "cafea";
+		this->ingrediente[2] = "mascarpone"; 
+	}
+	
+	Prajitura(const char *denumire, float pret)
 	{
-		this->rezolutie = 5.3;
-		this->memorie = 128;
-		this->model = "Iphone 17";
-		this->producator = new char[strlen("Apple") + 1];
-		strcpy_s(producator, strlen("Apple") + 1, "Apple");
-		this->pret = 4000;
-		this->nrAplicatii = 5;
-		this->memorieAplicatii = new float[this->nrAplicatii];
-		this->memorieAplicatii[0] = 2;
-		this->memorieAplicatii[1] = 3;
-		this->memorieAplicatii[2] = 1.4;
-		this->memorieAplicatii[3] = 1.6;
-		this->memorieAplicatii[4] = 2.4;
-
-
+		this->denumire = new char[strlen(denumire) + 1];
+		strcpy(this->denumire, denumire);
+		this->pret = pret;
+		this->cantitate = 4;
+		this->dePost = true;
+		this->nrIngrediente = 3;
+		this->ingrediente = new string[this->nrIngrediente];
+		this->ingrediente[0] = "piscoturi";
+		this->ingrediente[1] = "cafea";
+		this->ingrediente[2] = "mascarpone";
 	}
 
-	Telefon(float rezolutie, float memorie): id(contor++)
+	void afisare()
 	{
-		this->rezolutie = rezolutie;
-		this->memorie = memorie;
-		this->model = "Iphone 17";
-		this->producator = new char[strlen("Apple") + 1];
-		strcpy_s(producator, strlen("Apple") + 1, "Apple");
-		this->pret = 4000;
-		this->nrAplicatii = 5;
-		this->memorieAplicatii = new float[this->nrAplicatii];
-		this->memorieAplicatii[0] = 2;
-		this->memorieAplicatii[1] = 3;
-		this->memorieAplicatii[2] = 1.4;
-		this->memorieAplicatii[3] = 1.6;
-		this->memorieAplicatii[4] = 2.4;
-
-
-	}
-
-    Telefon(const Telefon& t): id(contor++)
-    {
-        this->rezolutie=t.rezolutie;
-        this->memorie=t.memorie;
-        this->model = t.model;
-		this->producator = new char[strlen(t.producator) + 1];
-		strcpy_s(producator, strlen(t.producator) + 1, t.producator);
-		this->pret = t.pret;
-		this->nrAplicatii = t.nrAplicatii;
-		this->memorieAplicatii = new float[this->nrAplicatii];
-		for (int i=0;i<this->nrAplicatii;i++)
-        {
-            this->memorieAplicatii[i]=t.memorieAplicatii[i];
-
-        }
-    }
-
-    ~Telefon()
-    {
-        delete[] producator;
-        delete[] memorieAplicatii;
-    }
-
-    float getPret()
-    {
-        return this->pret;
-    }
-
-    void setPret(float pret);
-    
-
-    int getNrAplicatii()
-    {
-        return this->nrAplicatii;
-    }
-
-    char* getProducator()
-    {
-        return this->producator;
-    }
-
-    void setProducator(const char* producator)
-    {
-        delete[] this->producator;
-        this->producator= new char[strlen(producator) + 1];
-        strcpy_s(this->producator, strlen(producator)+1, producator); 
-
-    }
-
-	void afisare() {
-		cout << "Rezolutie: " << this->rezolutie << "\n";
-		cout << "Memorie: " << this->memorie << "\n";
-		cout << "Model: " << this->model << "\n";
-		cout << "Producator: " << this->producator << "\n";
-		cout << "Pret: " << this->pret << "\n";
-		cout << "Numar aplicatii: " << this->nrAplicatii << "\n";
-		cout << "Memorie ocupata: ";
-		for (int i = 0; i < this->nrAplicatii; i++)
-			cout << this->memorieAplicatii[i] << "; ";
+		cout << "denumire:" << this->denumire << endl;
+		cout << "pret:" << this->pret << endl;
+		cout << "cantitate:" << this->cantitate<< endl;
+		cout << "de post:"<< (this->dePost ? "DA":"NU") << endl;
+		cout << "nr ingrediente:" << this->nrIngrediente << endl;
+		cout << "ingredientele sunt:";
+		for (int i = 0;i < this->nrIngrediente;i++)cout << this->ingrediente[i] << ", ";
 		cout << endl;
 	}
-
-	float calculeazaMemorieOcupata() {
-		float sumaMemorie= 0;
-		for (int i = 0; i < this->nrAplicatii; i++)
-			sumaMemorie += memorieAplicatii[i];
-		return sumaMemorie;
+	//calculati pretul mediu per gram;
+	float copstMediuPerGram()
+	{
+		if (cantitate == 0) { return 0; }
+		else
+		{
+			return this->pret / this->cantitate;
+		}
 	}
-
-	float calculeazaMemorieLibera() {
-		return memorie - calculeazaMemorieOcupata();
+	//modificare denumirea prajiturii respective
+	void modificaDenumire(const char *denumire)
+	{
+		delete this->denumire;
+		this->denumire = new char[strlen(denumire) + 1];
+		strcpy(this->denumire, denumire);
 	}
-
-	void modificaProducator(const char* producatorNou) {
-		delete[]this->producator;
-		producator = new char[strlen(producatorNou) + 1];
-		strcpy_s(producator, strlen(producatorNou) + 1, producatorNou);
-	}
-
 };
-
-int Telefon ::contor=1000;
-
-float calcularePretTotal(Telefon* v,int nrTelefoane)
+float calcCantTotala(Prajitura* prajituri, int nr_prajituri)
 {
-	float suma = 0;
-	for (int i = 0;i < nrTelefoane;i++)
-		suma += v[i].getPret;
-	return suma;
-}
-float calculeazaMemorieDisponibila(Telefon* g, int nrTelefoane)
-{
-	float suma = 0;
-	for (int i = 0;i < nrTelefoane;i++)
-		suma += g[i].calculeazaMemorieLibera();
-	return suma;
-
+	float greutate = 0;
+	for (int p = 0;p < nr_prajituri;p++)greutate += prajituri[p].cantitate;
+	return greutate;
 }
 
-float calculeaza(Telefon x )
-{
-    if(x.getNrAplicatii == 0)
-    {
-        return 0;
-    }
-    else
-    {
-        return x.getPret/x.getNrAplicatii;
-    }
-    
-}
 
-void Telefon :: setPret(float pret)
-{
-    this->pret=pret;
-}
 
-void main()
+
+int main() // io pun int ca nu merge cu void imi da eroare si nu se porneste 
 {
-    Telefon t;
-    Telefon t2(t);
-    Telefon t3 = t;
-    cout << calculeaza(t);
+	Prajitura p1;
+	Prajitura p2("amandina",40);
+	p1.afisare();
+	cout<< p1.copstMediuPerGram();
+	Prajitura* prajituri;
+	prajituri = new Prajitura[3];
+	prajituri[2].afisare();
+	prajituri[1].pret = 50;
+	prajituri[2].cantitate = 70;
+	prajituri[0].modificaDenumire("tort");
+	prajituri[1].modificaDenumire("amandina");
+	for (int i = 0;i < 3;i++)
+	{
+		cout <<prajituri[i].denumire <<" "<< prajituri[i].copstMediuPerGram() << endl;
+		
+	}
+	float greutate_totala = calcCantTotala(prajituri, 3);
+	cout << "total:" << greutate_totala << endl;
+    return 0;
+
 }
