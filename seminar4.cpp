@@ -1,4 +1,6 @@
-#include<iostream>
+#include <iostream>
+#include <string>
+#include <cstring>
 using namespace std;
 
 class Telefon {
@@ -138,7 +140,7 @@ float calcularePretTotal(Telefon* v,int nrTelefoane)
 {
 	float suma = 0;
 	for (int i = 0;i < nrTelefoane;i++)
-		suma += v[i].getPret;
+		suma += v[i].getPret();
 	return suma;
 }
 float calculeazaMemorieDisponibila(Telefon* g, int nrTelefoane)
@@ -152,13 +154,13 @@ float calculeazaMemorieDisponibila(Telefon* g, int nrTelefoane)
 
 float calculeaza(Telefon x )
 {
-    if(x.getNrAplicatii == 0)
+    if(x.getNrAplicatii() == 0)
     {
         return 0;
     }
     else
     {
-        return x.getPret/x.getNrAplicatii;
+        return x.getPret()/x.getNrAplicatii();
     }
     
 }
@@ -168,10 +170,11 @@ void Telefon :: setPret(float pret)
     this->pret=pret;
 }
 
-void main()
+int main()
 {
     Telefon t;
     Telefon t2(t);
     Telefon t3 = t;
     cout << calculeaza(t);
+	return 0;
 }
